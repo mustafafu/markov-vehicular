@@ -121,5 +121,5 @@ end
 save_file_string = ['data/veh_height', num2str(ha),'-veh_lane', num2str(cv_lane), '-BS_height', num2str(hBs),'-Theory-',AI];
 save_file_string = strrep(save_file_string,'.',',')
 
-save(save_file_string,'P_b','T_little','ha','cv_lane','hBs');
+save(save_file_string,'P_b','T_b','ha','cv_lane','hBs');
 toc
