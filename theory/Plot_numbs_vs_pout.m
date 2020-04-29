@@ -30,7 +30,7 @@ for ha_idx = 1:length(set_ha)
         
         save_fig_string = strcat(['cv_height_',num2str(ha),'_on_lane_', num2str(cv_lane)]);
         save_fig_string = strrep(save_fig_string,'.',',');
-        save_fig_string = ['./Figures/',save_fig_string, '.eps'];
-        print(h,save_fig_string,"-deps");
+        save_fig_string = ['./Figures/',save_fig_string, '.jpeg'];
+        saveas(h,save_fig_string);
     end
 end
