@@ -2,7 +2,7 @@
 
 set_hBs = [1.5,2,3,6,9];
 set_num_bs = 1:5;
-
+idx_len = length(set_hBs)*length(set_num_bs);
 [hBshBs,nbsnbs] =  meshgrid(set_hBs,set_num_bs);
 
 
@@ -22,9 +22,9 @@ else
   
   MAX_ITER = 10; % # of reinitialization and simulation
   NUM_BLOCK = 1000; % # of blockage events to record each iteration
-  
-  hBs = hBshBs(NAI)  % BS antenna height (in meters) 8->1 Lane 5->2 Lanes  2->3 Lanes
-  numBs = nbsnbs(NAI) % # of BSs in coverage area
+  idx = mod(NAI-1,idx_len)+1;
+  hBs = hBshBs(idx)  % BS antenna height (in meters) 8->1 Lane 5->2 Lanes  2->3 Lanes
+  numBs = nbsnbs(idx) % # of BSs in coverage area
 end
 
 %%
@@ -90,8 +90,8 @@ connectionStateIter = cell(MAX_ITER,1);
 % Initializing vehicle locationss
 yLocs=fliplr((blockingLanes-0.5)*widthLane);
 
-tic
 for iter = 1:MAX_ITER
+    tic
     iter
 %     if rem(iter,(MAX_ITER/10))==0
 %         iter
@@ -165,12 +165,11 @@ for iter = 1:MAX_ITER
     numBlockIter{iter} = blockageCount;
     distanceIter{iter}= distances;
     connectionStateIter{iter} = connectionStates;
+    toc
 end
-toc
 save_file_string = ['data/numBS_', num2str(numBs), '-heightBS_', num2str(hBs), '-BlockageDurationPercentage-BlockageDurations-',AI];
 save_file_string = strrep(save_file_string,'.',',')
 save(save_file_string, 'probabilityIter','durationIter', 'numBlockIter', 'connectionStateIter', 'distanceIter');
-
 
 
 
