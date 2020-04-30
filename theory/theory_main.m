@@ -1,16 +1,18 @@
 tic
 % Trying to formulate lambda and mu processes when there are more than 1
 % types of vehicles (depending on blockages)
-set_hBs = [1.5,2,3,4,6,8,10];
-set_ha = [1.5, 2, 1.46, 2.32, 4.19];
-set_ii = [3, 4];
+set_hBs = [1.5,2,3,4,5,6,7,8,9,10];
+set_ha = [1.46, 1.5, 1.74, 2,  2.32, 4.19];
+set_lane = [3, 4];
 
 num_bs = 1:5;
 
-[hBshBs,haha,iiii] =  meshgrid(set_hBs,set_ha,set_ii);
+[hBshBs,haha,iiii] =  meshgrid(set_hBs,set_ha,set_lane);
 
 
 AI = getenv('SLURM_ARRAY_TASK_ID')
+
+
 
 if (isempty(AI))
     warning('Not running on HPC.')
@@ -50,38 +52,34 @@ for jj = 1:ii-1
 end
 
 
-% We have 3 vehicle classes we want to compute the probability that a
+% We have 5 vehicle classes. See
+% https://docs.google.com/spreadsheets/d/1zVJ7LzDxbMI70hdvk_Qo-tDJyLVL9hnRRxhgTWmrMHM/edit?usp=sharing
+% we want to compute the probability that a
 % vehicle is higher than the critical height at that lane.
-% lengths = [4.5, 9.5, 13.25];
-% heights = [2 2.4 3.3];
-lengths = [4.84 5.03 15.24];
-length_sigmas = [0.118 0.433 0.763];
-heights = [1.46 2.32 4.19];
-height_sigmas = [0.015 0.145 0.058];
-lengthProb = [0.855, 0.855+0.017, 0.855+0.017+0.128];
-vehicleProb = [0.855, 0.017, 0.128];
-% lengthProb = [1/3, 2/3, 1];
-% vehicleProb = [1/3 1/3 1/3];
 
-%carHeights = H1.*normrnd(2.0, 0.1, [jj, sizeMat]) + H2.*normrnd(2.4, 0.1, [jj, sizeMat]) + H3.*normrnd(3.3, 0.15, [jj, sizeMat]);
+% Class length
+lengths = [4.8400, 4.9150, 5.0300, 15.2400, 17.3200];
+length_sigmas = [0.1566666667, 0.275, 0.5766666667, 1.016666667, 0.2733333333];
+% Class height
+heights = [1.46, 1.74, 2.32, 4.19, 4.135];
+height_sigmas = [0.02, 0.07333333333, 0.1933333333, 0.07666666667, 0.045];
+% Class probabilities
+vehicleProb = [0.4022268255, 0.4022268255, 0.06385292595, 0.008907301916, 0.1227861212];
 
-p_greater = zeros(ii-1,3); % each row: lane, each column: class of vehicle
-p_smaller = zeros(ii-1,3); % each row: lane, each column: class of vehicle
+NUM_CLASSES = length(vehicleProb);
+
+p_greater = zeros(ii-1,NUM_CLASSES); % each row: lane, each column: class of vehicle
+p_smaller = zeros(ii-1,NUM_CLASSES); % each row: lane, each column: class of vehicle
 
 mu_vehicle = zeros(1,ii-1);
 lambda_vehicle = zeros(1,ii-1);
+
 for jj=1:ii-1
-    p_greater(jj,:) = [qfunc((criticalHeight(jj)-heights(1))/height_sigmas(1)) qfunc((criticalHeight(jj)-heights(2))/height_sigmas(2)) qfunc((criticalHeight(jj)-heights(3))/height_sigmas(3))];
+    p_greater(jj,:) = qfunc((criticalHeight(jj)-heights)./height_sigmas);
     p_smaller(jj,:) = 1-p_greater(jj,:);
     mu_vehicle(jj) = 1/(sum(vehicleProb.*lengths.*p_greater(jj,:)/sum(vehicleProb.*p_greater(jj,:))));
     lambda_vehicle(jj) = 1/((1-sum(vehicleProb.*p_greater(jj,:)))/sum(vehicleProb.*p_greater(jj,:))*(s_average+sum(lengths.*p_smaller(jj,:)/sum(p_smaller(jj,:))))+s_average);
 end
-% for jj=1:ii-1
-%     p_greater(jj,:) = [qfunc((criticalHeight(jj)-2.0)/0.1) qfunc((criticalHeight(jj)-2.4)/0.1) qfunc((criticalHeight(jj)-3.3)/0.15)];
-%     p_smaller(jj,:) = 1-p_greater(jj,:);
-%     mu_vehicle(jj) = 1/(sum(vehicleProb.*lengths.*p_greater(jj,:)/sum(vehicleProb.*p_greater(jj,:))));
-%     lambda_vehicle(jj) = 1/((1-sum(vehicleProb.*p_greater(jj,:)))/sum(vehicleProb.*p_greater(jj,:))*(s_average+sum(lengths.*p_smaller(jj,:)/sum(p_smaller(jj,:))))+s_average);
-% end
 
 
 % Calculate corresponding arrival and service rates for each blocking lane
@@ -101,21 +99,18 @@ P_b = zeros(size(num_bs));
 T_b = zeros(size(num_bs));
 
 for pp = num_bs
-    num_bs = pp;
-    [MM,nb_indices,min_blocked_bs] = create_markov_matrix(num_bs,length(blockingLanes),lambda,mu);
+    [MM,nb_indices,min_blocked_bs] = create_markov_matrix(pp,length(blockingLanes),lambda,mu);
     
     b = sparse(1,size(MM,2),1,1,size(MM,2));
     pVec = b/MM;
-    
-    MM = MM(1:end,1:end-1);
     
     P_NB = full(sum(pVec(nb_indices)));
     P_b(pp) = 1-P_NB;
     
     %%  Blockage Duration
+    MM2 = MM(1:end,1:end-1);
     T_little = computeLittlesLaw(MM,nb_indices,min_blocked_bs,pVec);
     T_b(pp) = T_little;
-    
 end
 
 save_file_string = ['data/veh_height', num2str(ha),'-veh_lane', num2str(cv_lane), '-BS_height', num2str(hBs),'-Theory-',AI];

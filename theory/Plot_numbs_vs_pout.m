@@ -1,7 +1,9 @@
-set_hBs = [1.5,2,3,4,6,8,10];
-set_ha = [1.5, 2, 1.46, 2.32, 4.19];
+set_hBs = [1.5,2,3,4,5,6,7,8,9,10];
+set_ha = [1.46, 1.5, 1.74, 2,  2.32, 4.19];
 set_lane = [3, 4];
+
 num_bs = 1:5;
+
 
 for ha_idx = 1:length(set_ha)
     for lane_idx = 1:length(set_lane)
