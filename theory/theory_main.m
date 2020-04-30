@@ -1,8 +1,8 @@
 tic
 % Trying to formulate lambda and mu processes when there are more than 1
 % types of vehicles (depending on blockages)
-set_hBs = [1.5,2,3,4,5,6,7,8,9,10];
-set_ha = [1.46, 1.5, 1.74, 2,  2.32, 4.19];
+set_hBs = [1.5,2,3,6,9];
+set_ha = [1.46];
 set_lane = [3, 4];
 
 num_bs = 1:5;
