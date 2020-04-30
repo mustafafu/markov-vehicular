@@ -9,7 +9,7 @@
 module purge
 module load matlab/2019a
 
-cd /scratch/$USER/JSACMainPlots/
+cd /scratch/$USER/markov-vehicular/Simulation
 
 
 mkdir -p data

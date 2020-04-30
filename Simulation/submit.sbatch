@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #SBATCH --mem=4GB
-#SBATCH --time=01:10:00
+#SBATCH --time=02:00:00
 #SBATCH --cpus-per-task=1
 #SBATCH --output=logs/%a_%A.out
 #SBATCH --error=logs/%a_%A.err
@@ -9,7 +9,7 @@
 module purge
 module load matlab/2019a
 
-cd /scratch/$USER/JSACMainPlots/
+cd /scratch/$USER/markov-vehicular/Simulation
 
 
 mkdir -p data
