@@ -6,7 +6,7 @@ set_num_bs = 1:5;
 [hBshBs,nbsnbs] =  meshgrid(set_hBs,set_num_bs);
 
 
-for NAI = 1:length(nRarr)*length(hRarr)
+for NAI = 1:length(hBshBs(:))
     hBs = hBshBs(NAI)  % BS antenna height (in meters) 8->1 Lane 5->2 Lanes  2->3 Lanes
     numBs = nbsnbs(NAI) % # of BSs in coverage area
     string_1 = [datadir, '/numBS_',num2str(numBs),'-heightBS_',num2str(hBs)];
