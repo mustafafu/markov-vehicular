@@ -1,4 +1,5 @@
 %% Data Parser
+datadir = '/data';
 
 set_hBs = [1.5,2,3,6,9];
 set_num_bs = 1:5;
