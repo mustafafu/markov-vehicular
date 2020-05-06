@@ -52,8 +52,12 @@ widthLane = 3.5;
 Vc = 105; % communicating vehicle speed (km/h)
 Vb = 100; % blocking vehicle speed (km/h)
 
-lambda_vehicle = 0.0346; % 1/(Vb/3.6*2); % mean space between cars
-% 476 cars / 15minutes * (5.7 meters/car) / 65mph / 3 lanes
+lambda_vehicle = 0.0138406675; % There are 19310 vehicle on 7 lanes for 3 hours
+% vehicle/lane/hour is apprx 919 vehicles.
+% in one hour they travel about 72000m, each vehicle is 6.5m long on avg.
+% (72000 - 6.5 * 919)/919 is the mean spacing per vehicle. 1/this is the
+% lambda vehicle. Available on this link
+% https://docs.google.com/spreadsheets/d/1IH6ruqNTP6ze9IHhhbslzzmgfgH6JRiYcM9jvc54I3o/edit?usp=sharing
 
 
 Vc = Vc/3600; % Vc in m/ms

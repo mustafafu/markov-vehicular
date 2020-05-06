@@ -38,9 +38,8 @@ Vb = 100; % blocking vehicle speed (km/h)
 % End of input parameters
 
 
-% lambda_vehicle = 1/(Vb/3.6*2);  %following distance with a mean of 2 seconds between cars.
-s_average = 1/0.0346; % average distance between vehicles
-% mu_vehicle = 0.25; %random vehicle lengths with mean 4m.
+s_average = 72.2508506; % average distance between vehicles
+% the explanation is given in ../Simulation/SimulationMain
 
 Vc = Vc/3600; % Vc in m/ms
 Vb = Vb/3600; % Vc in m/ms

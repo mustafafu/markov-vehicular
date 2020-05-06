@@ -22,16 +22,17 @@ for ha_idx = 1:length(set_ha)
         h=figure();
         for ii=1:num_files
             aa = load([outputs(ii).folder,'/',outputs(ii).name]);
-            semilogy(num_bs,aa.P_b,'DisplayName',['hBs = ', num2str(aa.hBs)])
+            if ~(aa.hBs == 9 && cv_lane == 3) % no blockage at this parameters
+            plot(num_bs,aa.T_b(num_bs),'DisplayName',['hBs = ', num2str(aa.hBs)])
             hold on;
+            end
         end
         grid on;
         legend();
-        title(['cv height = ',num2str(ha),' on lane = ', num2str(cv_lane)])
-        ylim([1e-7,1])
+        title(['Durations cv height = ',num2str(ha),' on lane = ', num2str(cv_lane)])
         
         
-        save_fig_string = strcat(['Blockage-cv_height_',num2str(ha),'_on_lane_', num2str(cv_lane)]);
+        save_fig_string = strcat(['Duration-cv_height_',num2str(ha),'_on_lane_', num2str(cv_lane)]);
         save_fig_string = strrep(save_fig_string,'.',',');
         save_fig_string = ['./Figures/',save_fig_string, '.jpeg'];
         saveas(h,save_fig_string);
