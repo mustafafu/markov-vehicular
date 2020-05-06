@@ -1,7 +1,7 @@
 tic
 set_hBs = [1.5,2,3,6,9];
 set_ha = [1.46];
-set_lane = [3, 4];
+set_lane = [4];
 
 num_bs = 1:5;
 
@@ -10,8 +10,6 @@ num_bs = 1:5;
 
 AI = getenv('SLURM_ARRAY_TASK_ID')
 
-
-
 if (isempty(AI))
     warning('Not running on HPC.')
     AI = '1';
@@ -19,7 +17,7 @@ if (isempty(AI))
     % input parameters
     hBs = 6; % BS antenna height (in meters) 8->1 Lane 5->2 Lanes  2->3 Lanes
     ha = 1.5; % vehicle antenna height (in meters)
-    cv_lane = 3;
+    cv_lane = 4;
     ii = cv_lane;
 else
     NAI = str2num(AI);

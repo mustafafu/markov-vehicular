@@ -1,4 +1,5 @@
 %% Setup
+record_distance = false;
 
 set_hBs = [1.5,2,3,6,9];
 set_num_bs = 1:5;
@@ -15,8 +16,8 @@ if(isempty(AI))
   MAX_ITER = 2; % # of reinitialization and simulation
   NUM_BLOCK = 1000; % # of blockage events to record each iteration
   
-  hBs = 1.5; % BS antenna height (in meters) BS antenna height (in meters) 8->1 Lane 5->2 Lanes  2->3 Lanes
-  numBs = 2; % # of BSs in coverage area
+  hBs = 3; % BS antenna height (in meters) BS antenna height (in meters) 8->1 Lane 5->2 Lanes  2->3 Lanes
+  numBs = 5; % # of BSs in coverage area
 else
   NAI = str2num(AI);
   
@@ -88,8 +89,11 @@ dBs = Rcov/numBs;
 probabilityIter = cell(MAX_ITER,1);
 durationIter = cell(MAX_ITER,1);
 numBlockIter = cell(MAX_ITER,1);
-distanceIter = cell(MAX_ITER,1);
-connectionStateIter = cell(MAX_ITER,1);
+
+if record_distance 
+    distanceIter = cell(MAX_ITER,1);
+    connectionStateIter = cell(MAX_ITER,1);
+end
 
 % Initializing vehicle locationss
 yLocs=fliplr((blockingLanes-0.5)*widthLane);
@@ -118,14 +122,18 @@ for iter = 1:MAX_ITER
     output = checkConnection(carStartPositions,carLengths,carHeights,locBsProjected,blockingLanes,hBs, whereisCV, ha,locBs,locCv);
     state=output{1};
     isBs_blocked = output{2};
-    distance = output{3};
+    if record_distance
+        distance = output{3};
+    end
     
     time = 0;
     blockageDuration = 0;
     blockageVec = zeros(1,NUM_BLOCK);
     time_limit = max(max(max(carStartPositions)))/(Vc-Vb);
-    distances = zeros(ceil(numBs),floor(time_limit*0.9));
-    connectionStates = zeros(ceil(numBs),floor(time_limit*0.9));
+    if record_distance
+        distances = zeros(ceil(numBs),floor(time_limit*0.9));
+        connectionStates = zeros(ceil(numBs),floor(time_limit*0.9));
+    end
     while time<=floor(time_limit*0.9)
         time = time + delta;
         locCv(1) = locCv(1) + delta*Vc; % move the communicating vehicle
@@ -149,9 +157,11 @@ for iter = 1:MAX_ITER
         output = checkConnection(carStartPositions,carLengths,carHeights,locBsProjected,blockingLanes,hBs, whereisCV, ha,locBs,locCv);
         state=output{1};
         isBs_blocked = output{2};
-        distance = output{3};
-        distances(1:length(locBs),time) = distance';
-        connectionStates(1:length(locBs),time) = isBs_blocked';
+        if record_distance
+            distance = output{3};
+            distances(1:length(locBs),time) = distance';
+            connectionStates(1:length(locBs),time) = isBs_blocked';
+        end
         
         
         
@@ -167,14 +177,20 @@ for iter = 1:MAX_ITER
     probabilityIter{iter} = sum(blockageVec)/time;
     durationIter{iter} = blockageVec(1:blockageCount);
     numBlockIter{iter} = blockageCount;
-    distanceIter{iter}= distances;
-    connectionStateIter{iter} = connectionStates;
+    if record_distance
+        distanceIter{iter}= distances;
+        connectionStateIter{iter} = connectionStates;
+    end
     toc
 end
 save_file_string = ['data/numBS_', num2str(numBs), '-heightBS_', num2str(hBs), '-BlockageDurationPercentage-BlockageDurations-',AI];
 save_file_string = strrep(save_file_string,'.',',')
-save(save_file_string, 'probabilityIter','durationIter', 'numBlockIter', 'connectionStateIter', 'distanceIter');
 
+if record_distance
+    save(save_file_string, 'probabilityIter','durationIter', 'numBlockIter', 'connectionStateIter', 'distanceIter');
+end
+
+save(save_file_string, 'probabilityIter','durationIter', 'numBlockIter');
 
 
 
