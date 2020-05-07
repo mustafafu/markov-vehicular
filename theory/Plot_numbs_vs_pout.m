@@ -1,6 +1,6 @@
 set_hBs = [1.5,2,3,6,9];
 set_ha = [1.46];
-set_lane = [3, 4];
+set_lane = [ 4];
 
 num_bs = 1:5;
 
