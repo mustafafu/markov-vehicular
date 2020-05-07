@@ -20,22 +20,20 @@ for NAI = 1:length(hBshBs(:))
     end
     iter_size = size(durationIter,1);
     num_iter = size(matrix_list,1);
-    CellDuration = cell(iter_size*num_iter,1);
+    CellDuration = cell(1,iter_size*num_iter);
     CellNumBlock = cell(iter_size*num_iter,1);
     CellProbability = cell(iter_size*num_iter,1);
-    durationList = [];
     for jj=1:length(matrix_list)
         load(['.',datadir,'/',strtrim(matrix_list(jj).name)]);
-        CellDuration(((jj-1)*iter_size +1):((jj)*iter_size),1) = durationIter;
+        CellDuration(1, ((jj-1)*iter_size +1):((jj)*iter_size)) = durationIter;
         CellNumBlock(((jj-1)*iter_size +1):((jj)*iter_size),1) = numBlockIter;
         CellProbability(((jj-1)*iter_size +1):((jj)*iter_size),1) = probabilityIter;
-        for i = 1:size(durationIter,1)
-            durationList = [durationList cell2mat(durationIter(i))];
-        end
     end
+    durationList = cell2mat(CellDuration);
+    CellDuration =0;
     NumBlock = cell2mat(CellNumBlock);
-    Probability = cell2mat(CellProbability);
     CellNumBlock = 0;
+    Probability = cell2mat(CellProbability);
     CellProbability =0;
     mkdir(['.',datadir,'/combined_data']);
     string_2 = [datadir,'/combined_data', '/combined-numBS_',num2str(numBs),'-heightBS_',num2str(hBs),'-Durations-Probabilities'];
