@@ -8,12 +8,12 @@ git clone https://github.com/mustafafu/markov-vehicular.git
 ```
 cd to theory folder,
 ```bash
-sbatch --array=1-10 submit_theory.sbatch
+sbatch --array=1-5 submit_theory.sbatch
 ```
 where each instance computes one combination of parameters:
  * height of the RSUs
  * height of the communicating vehicle
- * in which lane the communicating vehicle travels.
+ * in which lane the communicating vehicle travels. (always on lane 4 now but can be changed)
  
  ## Realistic Simulation
 
