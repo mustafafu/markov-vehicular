@@ -1,7 +1,7 @@
 %% Setup
 record_distance = false;
 
-set_hBs = [1.5,2,3];
+set_hBs = [1.5,2,3,6,9];
 set_num_bs = 1:2;
 set_Vc = 60:5:140;
 
