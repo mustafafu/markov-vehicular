@@ -18,7 +18,7 @@ length_sigmas = [0.1566666667, 0.275, 0.5766666667, 1.016666667, 0.2733333333];
 heights = [1.46, 1.74, 2.32, 4.19, 4.135];
 height_sigmas = [0.02, 0.07333333333, 0.1933333333, 0.07666666667, 0.045];
 % Class probabilities
-vehicleProb = [0.4022268255, 0.4022268255, 0.06385292595, 0.008907301916, 0.1227861212];
+vehicleProb = [0.2731603749, 0.5313034022, 0.06384961939, 0.008906840661,0.1227797628];
 
 % taking random class samples with corresponding probabilities
 Prob = cumsum([0 vehicleProb]);

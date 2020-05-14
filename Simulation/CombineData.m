@@ -38,7 +38,7 @@ for NAI = 1:length(hBshBs(:))
     mkdir(['.',datadir,'/combined_data']);
     string_2 = [datadir,'/combined_data', '/combined-numBS_',num2str(numBs),'-heightBS_',num2str(hBs),'-Durations-Probabilities'];
     string_2 = strrep(string_2,'.',',');
-    save(['.',string_2,'.mat'], 'NumBlock','Probability','CellDuration')
+    save(['.',string_2,'.mat'], 'NumBlock','Probability','durationList')
     string_3 = [datadir,'/combined_data','/combined-numBS_',num2str(numBs),'-heightBS_',num2str(hBs),'-DurationList'];
     string_3 = strrep(string_3,'.',',');
     save(['.',string_3,'.mat'], 'durationList')
