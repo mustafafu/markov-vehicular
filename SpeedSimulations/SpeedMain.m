@@ -12,8 +12,7 @@ idx_len = length(set_hBs)*length(set_num_bs);
 Vc = 140; % blocking vehicle speed (km/h)
 set_Vb = 60:5:135;
 
-% AI = getenv('SLURM_ARRAY_TASK_ID')
-AI='10';
+AI = getenv('SLURM_ARRAY_TASK_ID')
 if(isempty(AI))
     warning('Not running on HPC.')
     AI = '422';
