@@ -1,8 +1,8 @@
 %% Setup
 record_distance = false;
 
-set_hBs = [1.5,2,3,6,9];
-set_num_bs = 1:2;
+set_hBs = [1.5,6];
+set_num_bs = 1;
 
 
 idx_len = length(set_hBs)*length(set_num_bs);
@@ -10,7 +10,7 @@ idx_len = length(set_hBs)*length(set_num_bs);
 
 % vehicle parameters
 Vc = 140; % blocking vehicle speed (km/h)
-set_Vb = 60:5:135;
+set_Vb = [140,135];
 
 AI = getenv('SLURM_ARRAY_TASK_ID')
 if(isempty(AI))
@@ -138,7 +138,7 @@ for vv = 1:length(set_Vb)
         time = 0;
         blockageDuration = 0;
         blockageVec = zeros(1,NUM_BLOCK);
-        time_limit = max(max(max(carStartPositions)))/(Vc-Vb);
+        time_limit = 400000;%max(max(max(carStartPositions)))/(Vc-Vb);
         if record_distance
             distances = zeros(ceil(numBs),floor(time_limit*0.9));
             connectionStates = zeros(ceil(numBs),floor(time_limit*0.9));
