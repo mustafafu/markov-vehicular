@@ -1,6 +1,5 @@
 # Vehicular Communications: Connectivity Analysis Using Markov Chain
 
-## Remember truncating
 Highway vehicle scenario where the outage probability and the blockage duration are computed theoretically using Markov Chain. To validate our calculations, we run simulations using real world vehicle class dimensions. We use a deterministic, geometry based LOS channel, where the communicating vehicle said to be out of service when the LOS link between the vehicle and roadside units (RSUs) are blocked by other vehicles traveling on adjacent lanes.
 
 ## Theoretical Computations
