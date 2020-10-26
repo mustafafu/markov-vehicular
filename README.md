@@ -1,5 +1,14 @@
 # Vehicular Communications: Connectivity Analysis Using Markov Chain
 
+## Please cite if you use this repository in your research:
+```
+C. Tunc, M. F. Ozkoc and S. Panwar, "Millimeter Wave Coverage and Blockage Duration Analysis for Vehicular Communications," 2019 IEEE 90th Vehicular Technology Conference (VTC2019-Fall), Honolulu, HI, USA, 2019, pp. 1-6, doi: 10.1109/VTCFall.2019.8891537.
+```
+Link to IEEE xplore:
+```
+https://ieeexplore.ieee.org/document/8891537
+```
+
 Highway vehicle scenario where the outage probability and the blockage duration are computed theoretically using Markov Chain. To validate our calculations, we run simulations using real world vehicle class dimensions. We use a deterministic, geometry based LOS channel, where the communicating vehicle said to be out of service when the LOS link between the vehicle and roadside units (RSUs) are blocked by other vehicles traveling on adjacent lanes.
 
 ## Theoretical Computations
