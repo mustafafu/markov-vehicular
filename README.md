@@ -2,9 +2,16 @@
 
 ## Please cite if you use this repository in your research:
 ```
-C. Tunc, M. F. Ozkoc and S. Panwar, "Millimeter Wave Coverage and Blockage Duration Analysis for Vehicular Communications," 2019 IEEE 90th Vehicular Technology Conference (VTC2019-Fall), Honolulu, HI, USA, 2019, pp. 1-6, doi: 10.1109/VTCFall.2019.8891537.
+C. Tunc, M. F. Özkoç, F. Fund and S. S. Panwar, "The Blind Side: Latency Challenges in Millimeter Wave Networks for Connected Vehicle Applications," in IEEE Transactions on Vehicular Technology, vol. 70, no. 1, pp. 529-542, Jan. 2021, doi: 10.1109/TVT.2020.3046501.
+```
+
+```
+C. Tunc, M. F. Özkoç and S. Panwar, "Millimeter Wave Coverage and Blockage Duration Analysis for Vehicular Communications," 2019 IEEE 90th Vehicular Technology Conference (VTC2019-Fall), Honolulu, HI, USA, 2019, pp. 1-6, doi: 10.1109/VTCFall.2019.8891537.
 ```
 Link to IEEE xplore:
+```
+https://ieeexplore.ieee.org/document/9303460
+```
 ```
 https://ieeexplore.ieee.org/document/8891537
 ```
